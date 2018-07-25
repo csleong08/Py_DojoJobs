@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login and Registration assignment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+    <style>
+        .container {
+            width: 1000px;
+            min-height: 1000px;
+        }
+        .register{
+            width: 400px;
+            min-height: 800px;
+            display: inline-block;
+            padding: 20px;
+        }
+        .login{
+            width: 400px;
+            min-height: 800px;
+            display: inline-block;
+            padding: 20px;
+            vertical-align: top;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>Welcome to Handy Helper</h3>
+        {% if messages %}
+        {% for message in messages %}
+            <p style="color: red;">{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+        <div class="register">
+            <h4>Registration</h4>
+            <form action="/register" method="POST">
+                {% csrf_token %}
+                <p>First Name: <input type="text" name="first_name" value=""></p>
+                <p>Last Name: <input type="text" name="last_name" value=""></p>
+                <p>Email: <input type="text" name="email" value=""></p>
+                <p>Password: <input type="password" name="password" value=""></p>
+                <p>Confirm pw: <input type="password" name="confirm_pw" value=""></p>
+                <input type="submit" name="" value="Register">
+            </form>
+        </div>
+        <div class="login">
+            <h4>Login</h4>
+            <form action="/login" method="POST">
+                {% csrf_token %}
+                <p>Email: <input type="text" name="email" value=""></p>
+                <p>Password: <input type="password" name="password" value=""></p>
+                <input type="submit" name="" value="Login">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

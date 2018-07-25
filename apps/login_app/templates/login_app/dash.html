@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login and Registration success</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+    <style>
+        .container {
+            width: 1000px;
+            min-height: 1000px;
+        }
+        .moveright{
+            display: inline-block;
+            margin-left: 100px;
+            position: relative;
+            left:80%; 
+        }
+        h4{
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top">
+            <h4>Welcome {{ request.session.first_name }}!</h4>
+            <a href="/logout">Logout</a>
+            <div class="right"><a href="/addJob">Add A Job</a></div>
+        </div>
+        <div class="middle">
+            <table>
+                <thead>
+                    <th>Job</th>
+                    <th>Location</th>
+                    <th>Action</th>
+                </thead>
+                {% for job in unliked_jobs %}
+                <tr>
+                    <td>{{ job.job_name }}</td>
+                    <td>{{ job.location }}</td>
+                    <input type="hidden" name="job_id" value="{{ job.id }}">
+                    <td><a href="/view/{{ job.id }}">View</a> | 
+                        <a href="/add/{{ job.id }}/{{ request.session.user_id }}">Add</a> | 
+                        {% if job.creator_id == request.session.user_id %}
+                        <a href="/edit/{{ job.id }}">Edit</a>
+                        <form action="/delete" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="job_id" value="{{ job.id }}">
+                            <button type="submit">Cancel</button>
+                        </form>
+                    {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+
+                
+            </table>
+        </div>
+        <div class="bottom">
+            <table>
+                <thead>
+                    <th>My Jobs</th>
+                </thead>
+                {% for job in liked_jobs %}
+                <tr>
+                    <td>{{ job.job_name }}</td>
+                    <td><a href="/view/{{ job.id }}">View</a></td>
+                    <input type="hidden" name="job_id" value="{{ job.id }}">
+                    <td>
+                        <form action="/delete" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="job_id" value="{{ job.id }}">
+                            <button type="submit">Done</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <br><br>
+        
+    </div>
+</body>
+</html>

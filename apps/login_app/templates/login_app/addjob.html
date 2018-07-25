@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+    <style>
+        .container {
+            width: 1000px;
+            min-height: 1000px;
+        }
+        .moveright{
+            display: inline-block;
+            margin-left: 100px;
+            position: relative;
+            left:80%; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h4>Add a Job</h4>
+        {% if messages %}
+        {% for message in messages %}
+            <p style="color: red;">{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+        <div class="moveright"><a href="/dash">Back</a> | <a href="/logout">Logout</a></div>
+        <form action="/createJob" method="POST">
+            {% csrf_token %}
+            <p>Title <input type="text" name="job_name" value=""></p>
+            <p>Description <textarea name="desc" id="" cols="30" rows="10"></textarea></p>
+            <p>Location <input type="text" name="location" value=""></p>
+            <input type="submit" name="" value="Submit">
+        </form>
+    </div>
+</body>
+</html>
